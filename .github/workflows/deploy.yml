@@ -27,9 +27,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./web-ui
     steps:
-      - name: Navigate to folder
-        run: cd ./web-ui 
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node
