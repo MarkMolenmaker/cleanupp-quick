@@ -1,0 +1,7 @@
+/web-ui/node_modules/
+/web-ui/*.iml
+
+/api/venv/
+/api/*.iml
+
+/.idea/
