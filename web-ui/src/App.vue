@@ -4,7 +4,8 @@
     <span class="message">{{ message }}</span>
   </header>
   <main v-if="isLoading" class="loading-main">
-    <span class="loading-title">Loading...</span>
+    <ProgressBar />
+    <LoadingSpinner />
     <span class="loading-message" v-for="(msg, index) in messageHistory" :key="index">{{ msg }}</span>
   </main>
   <main v-else>
@@ -12,7 +13,7 @@
     <DashboardSection v-else />
   </main>
   <footer>
-    <span class="text-content">Versie 2.0.1</span>
+    <span class="text-content">Versie 2.1.0</span>
   </footer>
 </template>
 
@@ -20,10 +21,12 @@
 import { mapGetters } from "vuex";
 import LoginSection from "@/components/LoginSection.vue";
 import DashboardSection from "@/components/dashboard/DashboardSection.vue";
+import LoadingSpinner from "@/components/loading/LoadingSpinner.vue";
+import ProgressBar from "@/components/loading/ProgressBar.vue";
 
 export default {
   name: 'App',
-  components: {DashboardSection, LoginSection},
+  components: {ProgressBar, LoadingSpinner, DashboardSection, LoginSection},
   computed: { ...mapGetters(['isLoggedIn', 'isLoading', 'message', 'messageHistory']) },
 }
 </script>
@@ -82,12 +85,7 @@ main.loading-main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-}
-span.loading-title {
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: #212121;
+  align-items: center;
 }
 span.loading-message {
   font-size: 0.75rem;

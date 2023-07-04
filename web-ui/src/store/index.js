@@ -102,20 +102,36 @@ export default createStore({
     isLoggedIn: false,
 
     isLoading: false,
+    progress: 0,
   },
   getters: {
     getField,
     isLoggedIn: state => state.isLoggedIn,
     dashboards: state => state.dashboards,
     isLoading: state => state.isLoading,
+    progress: state => state.progress,
     message: state => state.message,
     messageHistory: state => state.messageHistory,
     formattedDate: state => {
-        const date = new Date(state.date)
-        const year = date.getFullYear()
-        const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
-        const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
-        return year + '-' + month + '-' + day
+      const date = new Date(state.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1
+      const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate()
+      return year + '-' + month + '-' + day
+    },
+    taskCount: state => {
+      let count = { total: 0, completed: 0 }
+
+      const dashboard = state.dashboards ? state.dashboards[Object.keys(state.dashboards)[0]] : null
+      if (!dashboard) return count
+
+      for (const tasklist of Object.keys(dashboard)) {
+        for (const task of Object.keys(dashboard[tasklist]['TemperatureTask'])) {
+          count.total++
+          dashboard[tasklist]['TemperatureTask'][task]['TMeasurement'][0]['CheckResult'][0].passed ? count.completed++ : null
+        }
+      }
+      return count
     }
   },
   mutations: {
@@ -126,8 +142,16 @@ export default createStore({
     setLoggedIn(state, isLoggedIn) { state.isLoggedIn = isLoggedIn },
     setToDoCounter(state, toDoCounter) { state.toDoCounter = toDoCounter },
     setDashboards(state, dashboards) { state.dashboards = dashboards },
-    setLoading(state, isLoading) { state.isLoading = isLoading; if (!isLoading) { state.message = ''; state.messageHistory = [] }},
     setMessage(state, message) { state.message = message; state.messageHistory.push(message) },
+    setLoading(state, isLoading) {
+      state.isLoading = isLoading;
+      if (!isLoading) {
+        state.message = '';
+        state.messageHistory = [];
+        state.progress = 0;
+      }
+    },
+    setProgress(state, progress) { state.progress = progress },
   },
   actions: {
     login({ commit, dispatch }, { username, password }) {
@@ -158,8 +182,10 @@ export default createStore({
     async autocompleteTasks({ commit, getters, state }) {
         commit('setLoading', true)
         const dashboard = getters.dashboards[getters.formattedDate]
+        let counter = 0
         for (const tasklist in dashboard) {
           for (const task in dashboard[tasklist]['TemperatureTask']) {
+              commit('setProgress', 100 / getters.taskCount.total * ++counter)
               const taskName = dashboard[tasklist]['TemperatureTask'][task].excerpt
               const measurement = dashboard[tasklist]['TemperatureTask'][task]['TMeasurement'][0]['CheckResult'][0]
               if (measurement['passed'] && state.skipCompleted) {
