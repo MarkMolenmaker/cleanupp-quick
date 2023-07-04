@@ -13,7 +13,7 @@
     <DashboardSection v-else />
   </main>
   <footer>
-    <span class="text-content">Versie 2.1.0</span>
+    <span class="text-content">Versie 2.1.1</span>
   </footer>
 </template>
 

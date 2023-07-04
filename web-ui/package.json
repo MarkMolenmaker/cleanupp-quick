@@ -1,6 +1,6 @@
 {
   "name": "cleanupp-quick",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "A Vue3 pwa to save some time on cleaning up!",
   "author": "Mark Molenmaker",
   "private": true,
