@@ -1,0 +1,21 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+.tasks-completed {
+  button {
+    box-shadow: inset 0 0 0 2000px rgba(0, 255, 0, 0.15);
+  }
+}
+
+.tasks-not-completed {
+  button {
+    box-shadow: inset 0 0 0 2000px rgba(255, 0, 0, 0.15);
+  }
+}

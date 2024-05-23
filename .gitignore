@@ -2,7 +2,4 @@
 /web-ui/dist/
 /web-ui/*.iml
 
-/api/venv/
-/api/*.iml
-
 /.idea/
