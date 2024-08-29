@@ -23,7 +23,7 @@ export async function postMeasurementValue(json: string): Promise<any | null> {
     headers: {'Content-Type': 'application/json'}
   })
     .then((response: any) => response.data)
-    .catch((error: any) => new Promise((_, reject) => reject(error.response.data)))
+    .catch((error: any) => error.response.data)
 }
 
 export async function postMultipleMeasurementValue(json: string): Promise<any | null> {
