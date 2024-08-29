@@ -136,16 +136,16 @@ export default {
       let value = null
       switch (measurement['check']) {
         case 'BETWEEN (inclusive)':
-          value = Number(measurement['check_val_2']) - (Number(measurement['check_val_1']) / 2)
+          value = Math.round((Number(measurement['check_val_2']) - Math.random() * (Number(measurement['check_val_2']) - Number(measurement['check_val_1']))) * 10) / 10
           break
         case '<':
-          value = Number(measurement['check_val_1']) - 1
+          value = Math.round((Number(measurement['check_val_1']) - Math.random() * 3 - 0.1) * 10) / 10  // Random value between (check_val_1 - 3) and check_val_1, rounded to 1 decimal
           break
         case '>=':
-          value = Number(measurement['check_val_1']) + 1
+          value = Math.round((Number(measurement['check_val_1']) + Math.random() * 3 + 0.1) * 10) / 10  // Random value between (check_val_1 + 3) and check_val_1, rounded to 1 decimal
           break
         case '<=':
-          value = Number(measurement['check_val_1']) - 1
+          value = Math.round((Number(measurement['check_val_1']) - Math.random() * 3 - 0.1) * 10) / 10  // Random value between (check_val_1 - 3) and check_val_1, rounded to 1 decimal
           break
         case '=':
           value = true
