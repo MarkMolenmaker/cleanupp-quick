@@ -20,7 +20,7 @@
             <div class="d-flex flex-column justify-center align-star overflow-hidden">
               <span class="text-truncate">{{ task.excerpt }}</span>
               <div class="d-flex justify-start flex-wrap ga-1">
-                <v-chip v-for="attribute in task.TMeasurement[0].CheckResult" :key="attribute.id" class="w-fit-content text-caption" :text="attribute.element" :color="attribute.passed ? 'green' : 'red'" density="compact" label />
+                <v-chip v-for="attribute in task.TMeasurement[0].CheckResult" :key="attribute.id" class="w-fit-content text-caption" :text="attribute.element + ': ' + attribute.value" :color="attribute.passed ? 'green' : 'red'" density="compact" label />
               </div>
             </div>
           </v-list-item-title>
