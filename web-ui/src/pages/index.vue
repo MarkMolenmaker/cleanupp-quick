@@ -1,21 +1,22 @@
 <template>
   <v-container>
     <div v-if="appStore.getCurrentStore">
-      <v-row>
-        <v-col>
+      <v-row class="cq-menu-row">
+        <v-col class="cq-menu-col">
           <v-menu v-model="menu" :close-on-content-click="false" location="bottom">
             <template v-slot:activator="{ props }">
-              <v-btn color="primary" prepend-icon="mdi-calendar" v-bind="props" :text="selectedDateString" variant="tonal" :disabled="appStore.isLoading" />
+              <v-btn class="w-100" color="primary" prepend-icon="mdi-calendar" v-bind="props" :text="selectedDateString"
+                     variant="tonal" :disabled="appStore.isLoading" />
             </template>
             <v-date-picker v-model="selectedDate" hide-header @update:model-value="pickDate" :disabled="appStore.isLoading" />
           </v-menu>
         </v-col>
-        <v-col class="d-flex justify-end">
-          <v-btn color="primary" append-icon="mdi-logout" :text="appStore.getCurrentStore.company_name" variant="outlined" :disabled="appStore.isLoading"
-                 @click="signOut"/>
+        <v-col class="cq-menu-col">
+          <v-btn class="w-100" color="primary" append-icon="mdi-logout" :text="appStore.getCurrentStore.company_name"
+                 variant="outlined" :disabled="appStore.isLoading" @click="signOut"/>
         </v-col>
       </v-row>
-      <v-divider class="my-2" />
+      <v-divider class="my-4" />
       <dashboard-checklist ref="dashboardChecklist" />
     </div>
     <div v-else>
@@ -100,4 +101,20 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+// If screen width is smaller than 700px, place columns vertically
+.cq-menu-row
+  @media screen and (max-width: 700px)
+    flex-direction: column
+    .cq-menu-col
+      flex-grow: 1
+      width: 100%
+
+  @media screen and (min-width: 700px)
+    flex-direction: row
+    justify-content: space-between
+    .cq-menu-col
+      flex-grow: 0
+
+  .cq-menu-col
+    padding: 6px 12px
 </style>
