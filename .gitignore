@@ -1,5 +1,4 @@
 /web-ui/node_modules/
-/web-ui/dist/
 /web-ui/*.iml
 
 /.idea/

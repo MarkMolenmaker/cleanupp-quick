@@ -20,7 +20,7 @@
             <div class="d-flex flex-column justify-center align-star overflow-hidden">
               <span class="text-truncate">{{ task.excerpt }}</span>
               <div class="d-flex justify-start flex-wrap ga-1">
-                <v-chip v-for="attribute in task.TMeasurement[0].CheckResult" :key="attribute.id" class="w-fit-content text-caption" :text="attribute.element" :color="attribute.passed ? 'green' : 'red'" density="compact" label />
+                <v-chip v-for="attribute in task.TMeasurement[0].CheckResult" :key="attribute.id" class="w-fit-content text-caption" :text="attribute.element + ': ' + attribute.value" :color="attribute.passed ? 'green' : 'red'" density="compact" label />
               </div>
             </div>
           </v-list-item-title>
@@ -136,16 +136,16 @@ export default {
       let value = null
       switch (measurement['check']) {
         case 'BETWEEN (inclusive)':
-          value = Number(measurement['check_val_2']) - (Number(measurement['check_val_1']) / 2)
+          value = Math.round((Number(measurement['check_val_2']) - Math.random() * (Number(measurement['check_val_2']) - Number(measurement['check_val_1']))) * 10) / 10
           break
         case '<':
-          value = Number(measurement['check_val_1']) - 1
+          value = Math.round((Number(measurement['check_val_1']) - Math.random() * 3 - 0.1) * 10) / 10  // Random value between (check_val_1 - 3) and check_val_1, rounded to 1 decimal
           break
         case '>=':
-          value = Number(measurement['check_val_1']) + 1
+          value = Math.round((Number(measurement['check_val_1']) + Math.random() * 3 + 0.1) * 10) / 10  // Random value between (check_val_1 + 3) and check_val_1, rounded to 1 decimal
           break
         case '<=':
-          value = Number(measurement['check_val_1']) - 1
+          value = Math.round((Number(measurement['check_val_1']) - Math.random() * 3 - 0.1) * 10) / 10  // Random value between (check_val_1 - 3) and check_val_1, rounded to 1 decimal
           break
         case '=':
           value = true
